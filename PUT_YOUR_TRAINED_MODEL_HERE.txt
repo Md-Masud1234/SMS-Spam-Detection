@@ -1,0 +1,1 @@
+Extract your distilbert_sms_spam_model.zip from Colab into this folder. The folder should contain config.json and model.safetensors or pytorch_model.bin.
