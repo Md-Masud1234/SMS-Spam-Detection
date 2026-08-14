@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMS Spam Intelligence Desk</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grain"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">AI MESSAGE INSPECTION DESK</p>
+        <h1>SMS Spam Intelligence</h1>
+        <p class="subtitle">DistilBERT classifier + rule-based explanation agent</p>
+      </div>
+      <div class="status" id="backendStatus"><span></span> Checking backend...</div>
+    </header>
+
+    <section class="tabs">
+      <button class="tab active" data-tab="single">Single Inspection</button>
+      <button class="tab" data-tab="batch">Batch CSV</button>
+    </section>
+
+    <section id="single" class="tab-panel active">
+      <div class="grid">
+        <div class="card message-card">
+          <div class="card-head">
+            <span>01 / MESSAGE MANIFEST</span>
+            <span>LIVE ANALYSIS</span>
+          </div>
+          <label for="message">SMS CONTENT</label>
+          <textarea id="message" placeholder="Paste or type an SMS message here..."></textarea>
+          <div class="controls">
+            <label class="threshold-label">Decision threshold
+              <input id="threshold" type="number" min="0" max="1" step="0.05" value="0.50">
+            </label>
+            <button id="analyzeBtn" class="primary">INSPECT MESSAGE →</button>
+          </div>
+          <div id="errorBox" class="error hidden"></div>
+        </div>
+
+        <div class="card result-card">
+          <div class="card-head">
+            <span>02 / AGENT VERDICT</span>
+            <span id="modelDevice">—</span>
+          </div>
+          <div id="emptyResult" class="empty">
+            <div class="radar">◎</div>
+            <h2>Awaiting inspection</h2>
+            <p>Submit an SMS to receive a model verdict, risk level, trigger rules and explanation.</p>
+          </div>
+
+          <div id="result" class="hidden">
+            <div class="verdict-row">
+              <div id="verdict" class="verdict">—</div>
+              <div>
+                <div class="risk-label">RISK LEVEL</div>
+                <div id="risk" class="risk">—</div>
+              </div>
+            </div>
+            <div class="score-section">
+              <div class="score-meta"><span>SPAM SCORE</span><strong id="score">0%</strong></div>
+              <div class="bar"><div id="scoreBar"></div></div>
+            </div>
+            <div class="result-block">
+              <h3>TRIGGERED RULES</h3>
+              <div id="rules" class="chips"></div>
+            </div>
+            <div class="result-block">
+              <h3>AGENT EXPLANATION</h3>
+              <p id="explanation" class="explanation"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="batch" class="tab-panel">
+      <div class="card batch-card">
+        <div class="card-head">
+          <span>03 / BATCH MANIFEST</span>
+          <span>CSV ANALYSIS</span>
+        </div>
+        <div id="dropZone" class="dropzone">
+          <div class="upload-icon">＋</div>
+          <h2>Drop a CSV here</h2>
+          <p>or choose a file containing a <code>message</code>, <code>text</code>, or <code>sms</code> column.</p>
+          <input id="csvInput" type="file" accept=".csv">
+          <button id="chooseBtn" class="secondary">CHOOSE CSV</button>
+        </div>
+        <div id="batchError" class="error hidden"></div>
+        <div id="batchResult" class="hidden">
+          <div class="summary">
+            <div><span>TOTAL</span><strong id="totalCount">0</strong></div>
+            <div><span>SPAM</span><strong id="spamCount">0</strong></div>
+            <div><span>HAM</span><strong id="hamCount">0</strong></div>
+          </div>
+          <button id="downloadBtn" class="secondary">DOWNLOAD RESULTS CSV</button>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Message</th><th>Prediction</th><th>Score</th><th>Risk</th><th>Rules</th></tr></thead>
+              <tbody id="batchRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>MINI PROJECT • AI AGENT FOR SMS SPAM DETECTION</span>
+      <span>DistilBERT / FastAPI / HTML / CSS / JavaScript</span>
+    </footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
